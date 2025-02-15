@@ -58,21 +58,6 @@ elif page == "Predict":
         temp_pred = temp_model.predict(co2_poly_features)[0]  # Predict temperature  # Fixed input shape
         co2_pred = co2_model.predict(np.array([[temp_input]]))[0]  # Predict CO₂ emissions
 
-        def denormalize(value, min_value, max_value):
-           return value * (max_value - min_value) + min_value
-        
-        # Your actual min and max values from Jupyter Notebook
-        co2_min = 9350528.0
-        co2_max = 1500000000000.0
-        temp_min = 5.779833333333333
-        temp_max = 9.831
-
-        # Convert normalized predictions to real values
-        real_temp = denormalize(temp_pred, temp_min, temp_max)
-        real_co2 = denormalize(co2_pred, co2_min, co2_max)
-
-
-
 
         st.success(f"🌡️ Predicted Temperature: {temp_pred:.4f} (normalized)")
         st.success(f"💨 Predicted CO₂ Emissions: {co2_pred:.4f} (normalized)")
@@ -108,9 +93,6 @@ elif page == "Visualize Data":
     # Scatter Plot: Actual vs Predicted CO₂ Emissions
     st.write("### 📊 CO₂ Emissions vs Predicted Values")
     fig, ax = plt.subplots()
-
-    # Ensure input shape matches model expectations
-    df[["CO2_Emissions", "LandAverageTemperature"]] = scaler.fit_transform(df[["CO2_Emissions", "LandAverageTemperature"]])
 
     
     try:
